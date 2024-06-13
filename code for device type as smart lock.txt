@@ -1,0 +1,82 @@
+#include <ESP8266WiFi.h>
+#include <SinricPro.h>
+#include <SinricProLock.h> // Change to SinricProLock for Smart Lock
+#include <Servo.h>
+
+const char* ssid = "EEE";
+const char* password = "EEE";
+#define APP_KEY "EEE"
+#define APP_SECRET "EEE"
+#define DEVICE_ID "EEE"
+
+const int buttonPin = 12; // GPIO pin connected to the button (D6)
+boolean buttonPressed = false;
+int statusLedPin = 2;
+Servo servoMotor;  // Create servo object to control a servo
+int servoPin = 14; // GPIO pin connected to the servo (replace D5 with 14)
+// Callback function to handle commands from Sinric Pro
+
+bool onLockState(const String &deviceId, bool &state) {
+  Serial.println("Received command from Sinric Pro");
+  Serial.printf("Device ID: %s, State: %s\n", deviceId.c_str(), state ? "unlock" : "lock");
+  if (deviceId == DEVICE_ID) {
+    if (state) {
+      Serial.println("Unlocking the smart lock");
+      servoMotor.attach(servoPin);
+      servoMotor.write(130); // Move servo to 130 degrees to unlock (adjust as needed)
+      delay(500); // Wait for the servo to reach the position
+      servoMotor.detach();
+    } else {
+      Serial.println("Locking the smart lock");
+      servoMotor.attach(servoPin);
+      servoMotor.write(10); // Move servo to 10 degrees to lock (adjust as needed)
+      delay(500); // Wait for the servo to reach the position
+      servoMotor.detach();
+    }
+  }
+  return true; // Request handled properly
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(statusLedPin, OUTPUT);
+  pinMode(buttonPin, INPUT_PULLUP);
+
+  // Connect to WiFi
+  Serial.print("Connecting to WiFi...");
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    digitalWrite(statusLedPin, LOW);
+    delay(500);
+    digitalWrite(statusLedPin, HIGH);
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("Connected to WiFi");
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+
+
+  // Initialize Sinric Pro
+  SinricProLock &myLock = SinricPro[DEVICE_ID]; // Change to SinricProLock
+  SinricPro.begin(APP_KEY, APP_SECRET);
+  myLock.onLockState(onLockState); // Use onLockState callback
+
+}
+
+
+void loop() {
+  SinricPro.handle();
+
+  int buttonState = digitalRead(buttonPin); // Read current button state
+
+  // Check for button press transition (LOW to HIGH)
+  if (!buttonPressed && buttonState == HIGH) {
+    buttonPressed = true;  // Update flag for next loop
+    Serial.println("pressed");  // Print "pressed" only once
+  }
+
+}

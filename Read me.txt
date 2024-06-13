@@ -1,0 +1,11 @@
+This is a smart door lock arduino project code. This code contains logic to connect to sinric pro which is how I am accessing this via google assitant. 
+
+in siric pro the device type is set as SWITCH. this can be set to SMART LOCK which will add a pin code to unlock feature. For example when you say unlock door to google assitant, it will then ask for the pin. 
+I have added the code that works with SMART LOCK type separately on a text file. 
+
+I have used SWITCH type as this allows me to unlock without a pin which is faster. 
+
+Issue with this approach is that it identifies as a switch. If i want to say "unlock the door", "open the door" etc, then i have to configure then from google asistant routines. 
+I have configured the phrase "unlock the door" to trigger "turn off door lock switch"
+
+youtube video link will be added once i make the video. 
