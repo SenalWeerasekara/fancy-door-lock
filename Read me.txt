@@ -9,3 +9,24 @@ Issue with this approach is that it identifies as a switch. If i want to say "un
 I have configured the phrase "unlock the door" to trigger "turn off door lock switch"
 
 youtube video link will be added once i make the video. 
+
+
+
+
+Features
+01. Unlocks / Locks via sinric or google assitant. 
+02. Routines can be added to auto lock the door when you leave your house.
+03. Status LED for wifi connectivity. Will blink while connecting. off when connected. 
+04. does NOT maintain servo motor potition after setting it. This is done so that a failsafe method can be added to manually unlock if needed. If you want to eneble this then remove the line that detaches the servo. 
+
+Features to be added
+01. Physical button press to unlock / lock 
+02. LED status indicator for lock / unlock state
+03. Option to toggle auto unlock when wifi is disconnected. 
+
+Features to be added with additional components
+01. Adding dial pad to enter code to unlock.
+02. Fingerprint unlock. (dial pad is needed with FP incase FP fails)
+
+
+shedules to unlock / lock can be programmed however these can be done via routines much effectively. 
