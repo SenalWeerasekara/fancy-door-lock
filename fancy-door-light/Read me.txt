@@ -1,0 +1,19 @@
+This contains the code for a lighting system for a door or a gate. You can use any suitable arduino and the following components. 
+
+01. LED
+02. Transistor (if the arduino is not capable of powering the LED dirrectly)
+03. Switch 
+
+For the transistor I have used BR8550. This is salvaged from an old circuit nothing special. Use a suitable transistor or even a mosfet.
+For the switch I recommend a magnatic read switch. However you can use any suitable switch as the switch.
+
+Features
+01. LED turns on smoothly. Most important part duh. 
+02. When door is closed (switch on) LED will stay up for 2 seconds and turn off smoothly. 
+
+Features to be added. 
+01. LDR sensor to detect the light level of the env and only turn on LED if env light is dim. 
+
+
+
+Note :  This code can be easily added to the door lock code. I have tested this code with the door lock code which works without issues. 
